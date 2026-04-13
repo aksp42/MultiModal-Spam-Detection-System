@@ -128,18 +128,27 @@ The project includes a **real-time interactive dashboard** that transforms raw A
 
 ```
 .
-├── WEB-INF
+├── Screenshots/
+│   ├── Screenshot 2026-04-14 005103.png
+│   ├── Screenshot 2026-04-14 005112.png
+│   ├── Screenshot 2026-04-14 005122.png
+│   ├── Screenshot 2026-04-14 005150.png
+│   ├── Screenshot 2026-04-14 005202.png
+│   ├── Screenshot 2026-04-14 005223.png
+│   
+│
+├── WEB-INF/
 │   ├── mysql-connector-j-9.6.0.jar
 │   └── servlet-api.jar
 │
-├── database_connectivity
+├── database_connectivity/
 │   ├── AnalyzeServlet.java
 │   ├── DashboardServlet.java
 │   ├── DatabaseManager.java
 │   ├── DatabaseTest.java
 │   └── t
 │
-├── models
+├── models/
 │   ├── Model Code/
 │   ├── text_model/
 │   └── image_model.pth
@@ -185,7 +194,8 @@ python app.py
 
 ## 👩‍💻 Developed By
 
-**Akanksha Singh** - https://www.linkedin.com/in/akanksha-singh-4715a0351/
+**Akanksha Singh** - https://www.linkedin.com/in/akanksha-singh-4715a0351/ 
+
 Video of the project : https://www.linkedin.com/feed/update/urn:li:activity:7435308264692711426/?originTrackingId=AvOMtZdGQbLQAvcHoStBjQ%3D%3D
 
 📜 License
