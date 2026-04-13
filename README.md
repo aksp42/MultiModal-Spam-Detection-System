@@ -65,16 +65,57 @@ The system is powered by two deep learning models:
 - The models achieve **high accuracy with strong recall**, ensuring most spam instances are correctly detected.  
 - Low false positives and false negatives indicate **reliable real-world performance**.  
 - The system is optimized to **minimize missed spam (false negatives)**, which is critical for security-focused applications.
-## 📊 Analytical Dashboard & Data Engineering
+## 📊 Analytical Dashboard
 
-This project includes a real-time dashboard powered by **MySQL** and **Java Servlets**, focusing on Business Intelligence:
+The project includes a **real-time interactive dashboard** that transforms raw AI predictions into actionable insights.
 
-- 📈 **Real-Time Tracking** → Total scans, spam, and safe messages  
-- ⚠️ **Suspicious Category** → Tracks conflicting predictions  
-- 📊 **Confidence Metrics** → Average model confidence tracking  
-- 🗄️ **Data Persistence** → Structured SQL pipeline for long-term analytics  
+### 🚀 Key Features
+
+- **Live Metrics Tracking**
+  - Total Scanned Emails
+  - Spam Detected
+  - Safe (Ham)
+  - Suspicious Cases
+  - Average Model Confidence
+
+- **Data Distribution Analysis**
+  - Visual breakdown of Spam, Ham, and Suspicious categories
+  - Helps understand system behavior at a glance
+
+- **Detection Trends**
+  - Tracks spam detection patterns over time
+  - Useful for identifying spikes in threats
+
+- **System Health Monitoring**
+  - Displays processed vs remaining data
+  - Ensures smooth pipeline performance
+
+- **Volume Analysis**
+  - Compares category-wise scan counts
+  - Helps identify dominant patterns
+
+- **Model Performance Visualization**
+  - Accuracy, Precision, Recall, and F1-score shown in radar chart
+  - Gives quick insight into model efficiency
+
+- **Category Split Insights**
+  - Clear segmentation of predictions
+  - Helps in auditing AI decisions
 
 ---
+
+### 💡 Why This Dashboard Matters
+
+- Converts AI outputs into **Business Intelligence (BI) insights**
+- Enables **real-time monitoring and decision-making**
+- Helps identify **edge cases (Suspicious predictions)**
+- Bridges the gap between **Machine Learning and Data Analytics**
+
+---
+
+### 📸 Dashboard Preview
+
+![Dashboard](path/to/your/dashboard-image.png)
 
 ## 🛠️ Tech Stack
 
@@ -152,11 +193,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-## ⭐ Notes
 
-Add screenshots like this:  
-![Dashboard](path/to/image.png)  
-
- 
-
----
