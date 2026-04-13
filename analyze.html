@@ -6,7 +6,7 @@
 <title>AI Spam Detector - Analyze</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
-/* CSS vahi rakha hai jo tumne diya tha */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 body { margin: 0; font-family: "Poppins", sans-serif; background: radial-gradient(circle at top right, #162e58, #0b1e3d); color: white; overflow-x: hidden; min-height: 100vh; }
 header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -139,7 +139,6 @@ const uploadUI = document.getElementById("uploadUI");
 const results = document.getElementById("results");
 const analyzeBtn = document.getElementById("analyzeBtn");
 
-// FIX: Navigation logic updated for current folder structure
 function goTo(page) {
     window.location.href = "/spam-detector/" + page + ".html";
 }
@@ -175,7 +174,7 @@ async function analyze(){
   if(file) formData.append("image", file);
 
   try {
-    // FIX: URL updated to ensure it reaches the Servlet
+    
     let res = await fetch("/spam-detector/AnalyzeServlet", { method: "POST", body: formData });
     let data = await res.json();
 
