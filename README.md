@@ -31,7 +31,40 @@ The system is powered by two deep learning models:
 | Both Safe      | HAM        | HAM        | ✅ HAM          |
 
 ---
+## 📊 Model Evaluation
 
+### 🧠 Text Model (DistilBERT)
+
+- **Accuracy:** 99.10%  
+- **Precision:** 97.57%  
+- **Recall:** 98.41%  
+- **F1 Score:** 97.99%  
+
+**Confusion Matrix:**
+```
+[[2402   17]
+ [  11  683]]
+```
+
+---
+
+### 🖼️ Image Model (MobileNetV2)
+
+- **Accuracy:** 99.13%  
+
+**Confusion Matrix:**
+```
+[[161   1]
+ [  2 184]]
+```
+
+---
+
+### 💡 Insights
+
+- The models achieve **high accuracy with strong recall**, ensuring most spam instances are correctly detected.  
+- Low false positives and false negatives indicate **reliable real-world performance**.  
+- The system is optimized to **minimize missed spam (false negatives)**, which is critical for security-focused applications.
 ## 📊 Analytical Dashboard & Data Engineering
 
 This project includes a real-time dashboard powered by **MySQL** and **Java Servlets**, focusing on Business Intelligence:
