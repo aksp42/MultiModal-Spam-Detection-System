@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Spam Detector - Home</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: radial-gradient(circle at top right, #162e58, #0b1e3d);
+    overflow-x: hidden;
+    color: white;
+    min-height: 100vh;
+}
+
+/* ===== NAVBAR ===== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(15px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #58a6ff;
+    letter-spacing: 1px;
+}
+
+nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.7);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 500;
+}
+
+.nav-btn:hover, .nav-btn.active {
+    background: rgba(88, 166, 255, 0.2);
+    color: #58a6ff;
+}
+
+/* 🔵 Floating Background Icons */
+.floating-bg img {
+    position: absolute;
+    width: 60px;
+    opacity: 0.15;
+    animation: float 10s infinite ease-in-out;
+    filter: grayscale(20%);
+}
+
+.floating-bg img:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
+.floating-bg img:nth-child(2) { top: 25%; left: 80%; animation-delay: 2s; }
+.floating-bg img:nth-child(3) { top: 65%; left: 15%; animation-delay: 4s; }
+.floating-bg img:nth-child(4) { top: 80%; left: 75%; animation-delay: 1s; }
+.floating-bg img:nth-child(5) { top: 45%; left: 45%; animation-delay: 3s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(10deg); }
+}
+
+/* ===== HERO (Space Minimized) ===== */
+.hero {
+    text-align: center;
+    padding: 15px 20px 30px; 
+    position: relative;
+    z-index: 10;
+}
+
+.shield-icon {
+    font-size: 70px;
+    color: #58a6ff;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 0 20px rgba(88, 166, 255, 0.4));
+}
+
+.title {
+    font-size: 55px;
+    font-weight: 700;
+    background: linear-gradient(to bottom, #ffffff, #58a6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-size: 20px;
+    color: #cbd5f5;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.4;
+}
+
+.highlight-red { color: #ff4d6d; text-shadow: 0 0 10px rgba(255,77,109,0.3); }
+.highlight-green { color: #22c55e; text-shadow: 0 0 10px rgba(34,197,94,0.3); }
+
+/* ===== FEATURE CARDS ===== */
+.icons-area {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 0 40px;
+    flex-wrap: wrap;
+    z-index: 10;
+}
+
+.icon-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px 25px;
+    width: 260px;
+    border-radius: 24px;
+    text-align: center;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.icon-box:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #58a6ff;
+}
+
+.icon-box i {
+    font-size: 40px;
+    color: #58a6ff;
+    margin-bottom: 15px;
+}
+
+.label {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* ===== GET STARTED BUTTON ===== */
+.btn-container {
+    margin-top: 35px;
+    text-align: center;
+}
+
+.btn {
+    background: linear-gradient(135deg, #007bff, #4e9eff);
+    color: white;
+    padding: 15px 50px;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,123,255,0.4);
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 30px;
+    background: rgba(0,0,0,0.2);
+    color: rgba(203, 213, 245, 0.6);
+    font-size: 14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🛡️ AI Spam Detector</div>
+    <nav>
+    <button class="nav-btn active" onclick="goTo('index')">Home</button>
+    <button class="nav-btn" onclick="goTo('analyze')">Analyze</button>
+    <button class="nav-btn" onclick="goTo('dashboard')">Dashboard</button>
+    <button class="nav-btn" onclick="goTo('about')">About</button>
+</nav>
+</header>
+
+<div class="floating-bg">
+    <img src="https://img.icons8.com/fluency/96/new-post.png">
+    <img src="https://img.icons8.com/color/96/spam.png">
+    <img src="https://img.icons8.com/color/96/sms.png">
+    <img src="https://img.icons8.com/fluency/96/mail.png">
+    <img src="https://img.icons8.com/fluency/96/secured-letter.png">
+</div>
+
+<section class="hero">
+    <div class="shield-icon"><i class="fas fa-user-shield"></i></div>
+    <div class="title">Secure Your Inbox</div>
+    <div class="subtitle">
+        A Multi-Modal Intelligence system to identify 
+        <span class="highlight-red">SPAM</span> or 
+        <span class="highlight-green">HAM</span> with 99% accuracy.
+    </div>
+</section>
+
+<div class="icons-area">
+    <div class="icon-box">
+        <i class="fas fa-robot"></i>
+        <div class="label">AI Powered</div>
+        <p style="font-size: 13px; opacity: 0.7; margin-top: 8px;">DistilBERT & CNN models working together.</p>
+    </div>
+
+    <div class="icon-box">
+        <i class="fas fa-bolt"></i>
+        <div class="label">Instant Analysis</div>
+        <p style="font-size: 13px; opacity: 0.7; margin-top: 8px;">Results in milliseconds with real-time processing.</p>
+    </div>
+
+    <div class="icon-box">
+        <i class="fas fa-images"></i>
+        <div class="label">Multi-Modal</div>
+        <p style="font-size: 13px; opacity: 0.7; margin-top: 8px;">Scans both Text and Images for hidden threats.</p>
+    </div>
+</div>
+
+<div class="btn-container">
+    <button class="btn" onclick="goTo('analyze')">
+         Get Started <i class="fas fa-arrow-right"></i>
+    </button>
+</div>
+
+<footer style="
+    text-align: center; 
+    margin-top: 80px; 
+    padding: 40px 20px; 
+    background: rgba(0,0,0,0.3); 
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #9fb3d6;">
+    
+    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; font-size: 18px; opacity: 0.8;">
+        <span><i class="fas fa-shield-alt"></i> Secure</span>
+        <span><i class="fas fa-bolt"></i> Real-time</span>
+        <span><i class="fas fa-brain"></i> AI-Powered</span>
+    </div>
+
+    <p style="margin: 5px 0; font-weight: 600; letter-spacing: 1px; color: #fff;">
+        © 2026 MULTI-MODAL SPAM DETECTION SYSTEM
+    </p>
+    
+    <p style="font-size: 13px; opacity: 0.6; max-width: 600px; margin: 10px auto;">
+        An advanced research project focused on enhancing email security through Distributed Intelligence and Computer Vision. 
+        Designed for high-accuracy threat classification.
+    </p>
+
+    <div style="margin-top: 20px; font-size: 12px; opacity: 0.5;">
+        Academic Project • Data Science & ML • v1.0.4
+    </div>
+</footer>
+
+<script>
+
+function goTo(page) { 
+    window.location.href = "/spam-detector/" + page + ".html"; 
+}
+</script>
+
+</body>
+</html>

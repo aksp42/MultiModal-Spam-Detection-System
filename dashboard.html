@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Spam Detector</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body { margin: 0; font-family: "Poppins", sans-serif; background: #0b1e3d; color: white; overflow-x: hidden; }
+        
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 40px; background: rgba(255,255,255,0.05); 
+            backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+        }
+        
+        .logo { font-size: 20px; font-weight: 600; color: #58a6ff; }
+        
+        nav { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; }
+        
+        .nav-btn { background: transparent; border: none; color: white; padding: 8px 18px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-size: 14px; }
+        .nav-btn:hover, .nav-btn.active { background: rgba(255,255,255,0.2); color: #58a6ff; }
+        
+        main { padding: 30px 40px; }
+        
+        .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 25px; }
+        
+        .stat-card { 
+            min-height: 110px; display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; border-radius: 12px; text-align: center; 
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.05); 
+            transition: transform 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.12); }
+        
+        .stat-card h3 { margin: 0; font-size: 11px; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; }
+        .stat-card p { font-size: 26px; margin: 5px 0 0; font-weight: 700; }
+        
+        #totalMsg { color: #58a6ff; } 
+        #spamCount { color: #ff4d6d; } 
+        #hamCount { color: #4cd964; } 
+        #suspiciousCount { color: #facc15; } 
+        #avgConf { color: #a78bfa; }
+        
+        .charts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        
+        .chart-card { 
+            background: rgba(255,255,255,0.06); padding: 20px; border-radius: 15px; 
+            border: 1px solid rgba(255,255,255,0.05); height: 350px; 
+        }
+        
+        .chart-card h4 { margin: 0 0 15px 0; font-size: 14px; font-weight: 400; opacity: 0.9; display: flex; align-items: center; gap: 8px; }
+        
+        canvas { width: 100% !important; height: 260px !important; }
+
+        @media (max-width: 1200px) { .charts { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 800px) { .charts { grid-template-columns: 1fr; } .stats { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">🛡️ AI Spam Detector</div>
+    <nav>
+        <button class="nav-btn" onclick="goTo('index')">Home</button>
+        <button class="nav-btn" onclick="goTo('analyze')">Analyze</button>
+        <button class="nav-btn active">Dashboard</button>
+        <button class="nav-btn" onclick="goTo('about')">About</button>
+    </nav>
+</header>
+
+<main>
+    <div class="stats">
+        <div class="stat-card"><h3>Total Scanned</h3><p id="totalMsg">0</p></div>
+        <div class="stat-card"><h3>Spam Detected</h3><p id="spamCount">0</p></div>
+        <div class="stat-card"><h3>Safe (Ham)</h3><p id="hamCount">0</p></div>
+        <div class="stat-card"><h3>Suspicious</h3><p id="suspiciousCount">0</p></div>
+        <div class="stat-card"><h3>Avg Confidence</h3><p id="avgConf">0%</p></div>
+    </div>
+
+    <div class="charts">
+        <div class="chart-card"><h4><i class="fas fa-chart-pie"></i> Distribution</h4><canvas id="pieChart"></canvas></div>
+        <div class="chart-card"><h4><i class="fas fa-brain"></i> System Health</h4><canvas id="doughnutChart"></canvas></div>
+        <div class="chart-card"><h4><i class="fas fa-chart-line"></i> Detection Trend</h4><canvas id="lineChart"></canvas></div>
+        <div class="chart-card"><h4><i class="fas fa-chart-bar"></i> Volume Analysis</h4><canvas id="barChart"></canvas></div>
+        <div class="chart-card"><h4><i class="fas fa-spider"></i> Accuracy Metrics</h4><canvas id="radarChart"></canvas></div>
+        <div class="chart-card"><h4><i class="fas fa-circle-notch"></i> Category Split</h4><canvas id="polarChart"></canvas></div>
+    </div>
+</main>
+
+<footer style="
+    text-align: center; 
+    margin-top: 80px; 
+    padding: 40px 20px; 
+    background: rgba(0,0,0,0.3); 
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #9fb3d6;">
+    
+    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; font-size: 18px; opacity: 0.8;">
+        <span><i class="fas fa-shield-alt"></i> Secure</span>
+        <span><i class="fas fa-bolt"></i> Real-time</span>
+        <span><i class="fas fa-brain"></i> AI-Powered</span>
+    </div>
+
+    <p style="margin: 5px 0; font-weight: 600; letter-spacing: 1px; color: #fff;">
+        © 2026 MULTI-MODAL SPAM DETECTION SYSTEM
+    </p>
+    
+    <p style="font-size: 13px; opacity: 0.6; max-width: 600px; margin: 10px auto;">
+        An advanced research project focused on enhancing email security through Distributed Intelligence and Computer Vision. 
+        Designed for high-accuracy threat classification.
+    </p>
+
+    <div style="margin-top: 20px; font-size: 12px; opacity: 0.5;">
+        Academic Project • Data Science & ML • v1.0.4
+    </div>
+</footer>
+
+<script>
+// Navigation
+function goTo(page) {
+    window.location.href = "/spam-detector/" + page + ".html";
+}
+
+// Fetch Data from Servlet
+async function fetchDashboardData() {
+    try {
+        // Cache buster adds unique time to URL to force fresh data
+        const response = await fetch('/spam-detector/DashboardServlet?t=' + new Date().getTime());
+        if (!response.ok) throw new Error('Network response was not ok');
+        
+        const data = await response.json();
+
+        // Update UI Numbers
+        document.getElementById('totalMsg').innerText = data.total_scanned;
+        document.getElementById('spamCount').innerText = data.spam_detected;
+        document.getElementById('hamCount').innerText = data.ham_detected;
+        document.getElementById('suspiciousCount').innerText = data.suspicious_cases;
+        
+        // Confidence calculation (assumes decimal like 0.85 or raw percentage)
+        let confVal = data.avg_confidence;
+        if (confVal <= 1 && confVal > 0) confVal = confVal * 100;
+        document.getElementById('avgConf').innerText = confVal.toFixed(1) + "%";
+
+        // Create Charts
+        renderCharts(data);
+    } catch (error) {
+        console.error("Dashboard Fetch Error:", error);
+    }
+}
+
+let chartInstances = {}; // To store and destroy old charts
+
+function renderCharts(dbData) {
+    const { spam_detected, ham_detected, suspicious_cases, total_scanned } = dbData;
+
+    // Destroy existing charts to prevent overlaps
+    Object.values(chartInstances).forEach(chart => chart.destroy());
+
+    Chart.defaults.color = 'rgba(255,255,255,0.7)';
+    const commonOptions = { 
+        responsive: true, 
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } } }
+    };
+
+    // 1. Pie Chart
+    chartInstances.pie = new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Spam', 'Ham', 'Suspicious'],
+            datasets: [{
+                data: [spam_detected, ham_detected, suspicious_cases],
+                backgroundColor: ['#ff4d6d', '#4cd964', '#facc15'],
+                borderWidth: 0
+            }]
+        },
+        options: commonOptions
+    });
+
+    // 2. Doughnut
+    chartInstances.doughnut = new Chart(document.getElementById('doughnutChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Processed', 'Remaining'],
+            datasets: [{
+                data: [total_scanned, Math.max(0, 100 - total_scanned)],
+                backgroundColor: ['#a78bfa', 'rgba(255,255,255,0.1)'],
+                borderWidth: 0
+            }]
+        },
+        options: { ...commonOptions, cutout: '75%' }
+    });
+
+    // 3. Line Chart (Recent Trend)
+    chartInstances.line = new Chart(document.getElementById('lineChart'), {
+        type: 'line',
+        data: {
+            labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Today'],
+            datasets: [{
+                label: 'Threats',
+                data: [2, 5, 4, 9, 6, 3, spam_detected],
+                borderColor: '#ff4d6d',
+                backgroundColor: 'rgba(255, 77, 109, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: commonOptions
+    });
+
+    // 4. Bar Chart
+    chartInstances.bar = new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Spam', 'Ham', 'Suspicious'],
+            datasets: [{
+                label: 'Count',
+                data: [spam_detected, ham_detected, suspicious_cases],
+                backgroundColor: ['#ff4d6d', '#4cd964', '#facc15'],
+                borderRadius: 5
+            }]
+        },
+        options: commonOptions
+    });
+
+    // 5. Radar
+    chartInstances.radar = new Chart(document.getElementById('radarChart'), {
+        type: 'radar',
+        data: {
+            labels: ['Accuracy', 'Speed', 'Precision', 'Recall', 'F1-Score'],
+            datasets: [{
+                label: 'Model Metrics',
+                data: [92, 85, 88, 90, 89],
+                borderColor: '#58a6ff',
+                backgroundColor: 'rgba(88, 166, 255, 0.2)'
+            }]
+        },
+        options: { ...commonOptions, scales: { r: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { display: false } } } }
+    });
+
+    // 6. Polar Area
+    chartInstances.polar = new Chart(document.getElementById('polarChart'), {
+        type: 'polarArea',
+        data: {
+            labels: ['Spam', 'Ham', 'Suspicious'],
+            datasets: [{
+                data: [spam_detected, ham_detected, suspicious_cases],
+                backgroundColor: ['rgba(255,77,109,0.5)', 'rgba(76,217,100,0.5)', 'rgba(250,204,21,0.5)']
+            }]
+        },
+        options: commonOptions
+    });
+}
+
+// Initial Load
+window.onload = fetchDashboardData;
+</script>
+
+</body>
+</html>

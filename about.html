@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About - AI Spam Detector</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* ===== BODY ===== */
+body { margin: 0; font-family: "Poppins", sans-serif; background: #0b1e3d; color: white; scroll-behavior: smooth; }
+
+/* ===== NAVBAR ===== */
+header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.logo { font-size: 20px; font-weight: 600; color: #58a6ff; }
+nav { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; }
+.nav-btn { background: transparent; border: none; color: white; padding: 6px 14px; border-radius: 20px; cursor: pointer; transition: 0.3s; }
+.nav-btn:hover, .nav-btn.active { background: rgba(88, 166, 255, 0.2); color: #58a6ff; }
+
+/* ===== MAIN ===== */
+main { padding: 40px 10%; max-width: 1200px; margin: auto; }
+
+/* ===== CARD ===== */
+.card { background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); padding: 30px; margin-bottom: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease; }
+.card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.09); }
+
+/* HEADINGS */
+h1 { text-align: center; color: #58a6ff; font-size: 2.5rem; margin-bottom: 40px; }
+h2 { color: #58a6ff; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+h3 { color: #cbd5f5; border-left: 4px solid #58a6ff; padding-left: 10px; margin-top: 25px; }
+
+/* TEXT & LISTS */
+p { color: #dbeafe; line-height: 1.8; font-size: 1.05rem; }
+ul { list-style: none; padding: 0; }
+li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; color: #cbd5f5; }
+li i { color: #58a6ff; font-size: 0.9rem; }
+
+/* PERFORMANCE METRICS */
+.metric-container { display: flex; gap: 15px; flex-wrap: wrap; margin: 15px 0; }
+.metric-tag { background: rgba(76, 217, 100, 0.1); border: 1px solid #4cd964; color: #4cd964; padding: 5px 12px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; }
+
+/* CONFUSION MATRIX */
+.matrix { background: #050c1a; padding: 20px; border-radius: 12px; font-family: 'Courier New', monospace; display: block; color: #58a6ff; border: 1px solid rgba(88, 166, 255, 0.2); letter-spacing: 2px; line-height: 1.5; }
+
+/* LABELS */
+.label { padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+.spam { background: #ff4d6d; color: white; }
+.ham { background: #22c55e; color: white; }
+.suspicious { background: #facc15; color: #0b1e3d; }
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo"><i class="fas fa-shield-halved"></i> AI Spam Detector</div>
+  <nav>
+    <button class="nav-btn" onclick="goTo('index')">Home</button>
+    <button class="nav-btn" onclick="goTo('analyze')">Analyze</button>
+    <button class="nav-btn" onclick="goTo('dashboard')">Dashboard</button>
+    <button class="nav-btn active">About</button>
+  </nav>
+
+</header>
+
+<main>
+  <h1>About the Project</h1>
+
+  <div class="card">
+    <h2><i class="fas fa-circle-info"></i> Project Overview</h2>
+    <p>This system is a <b>State-of-the-art Multi-Modal AI solution</b> designed to combat modern email threats. Traditional filters often miss spam hidden in images or screenshots; our system bridges this gap by merging text and visual intelligence.</p>
+    <div style="display: flex; gap: 15px; margin-top: 15px;">
+      <span class="label ham">Safe (Ham)</span>
+      <span class="label suspicious">Suspicious</span>
+      <span class="label spam">Spam</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><i class="fas fa-microchip"></i> How It Works</h2>
+    <p>The system utilizes a <b>Late-Fusion Multimodal Architecture</b>:</p>
+    <ul>
+      <li><i class="fas fa-file-alt"></i> <b>DistilBERT:</b> Lightweight Transformer for Text Analysis.</li>
+      <li><i class="fas fa-image"></i> <b>MobileNetV2:</b> Efficient CNN for Image detection & OCR processing.</li>
+    </ul>
+    
+    <h3 style="border-color: #facc15;">Decision Logic</h3>
+    <ul style="margin-top: 10px;">
+      <li><i class="fas fa-times-circle" style="color:#ff4d6d"></i> <b>SPAM:</b> Triggered if both models flag the content.</li>
+      <li><i class="fas fa-exclamation-triangle" style="color:#facc15"></i> <b>SUSPICIOUS:</b> Triggered if either model detects a threat.</li>
+      <li><i class="fas fa-check-circle" style="color:#22c55e"></i> <b>HAM:</b> Confirmed safe when both models clear the input.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2><i class="fas fa-chart-line"></i> Model Performance</h2>
+    <h3>Metrics Summary</h3>
+    <div class="metric-container">
+      <span class="metric-tag">Accuracy: 99.10%</span>
+      <span class="metric-tag">Precision: 97.57%</span>
+      <span class="metric-tag">Recall: 98.41%</span>
+    </div>
+    <div class="matrix">
+      [[2402, 17] <br> [ 11, 683]]
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><i class="fas fa-layer-group"></i> Tech Stack</h2>
+    <ul style="display: grid; grid-template-columns: 1fr 1fr;">
+      <li><i class="fab fa-java"></i> Java Servlets & JSP</li>
+      <li><i class="fas fa-database"></i> MySQL Database</li>
+      <li><i class="fab fa-python"></i> Python (ML Engine)</li>
+      <li><i class="fas fa-fire"></i> PyTorch & Transformers</li>
+    </ul>
+  </div>
+</main>
+
+<footer style="
+    text-align: center; 
+    margin-top: 80px; 
+    padding: 40px 20px; 
+    background: rgba(0,0,0,0.3); 
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #9fb3d6;">
+    
+    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; font-size: 18px; opacity: 0.8;">
+        <span><i class="fas fa-shield-alt"></i> Secure</span>
+        <span><i class="fas fa-bolt"></i> Real-time</span>
+        <span><i class="fas fa-brain"></i> AI-Powered</span>
+    </div>
+
+    <p style="margin: 5px 0; font-weight: 600; letter-spacing: 1px; color: #fff;">
+        © 2026 MULTI-MODAL SPAM DETECTION SYSTEM
+    </p>
+    
+    <p style="font-size: 13px; opacity: 0.6; max-width: 600px; margin: 10px auto;">
+        An advanced research project focused on enhancing email security through Distributed Intelligence and Computer Vision. 
+        Designed for high-accuracy threat classification.
+    </p>
+
+    <div style="margin-top: 20px; font-size: 12px; opacity: 0.5;">
+        Academic Project • Data Science & ML • v1.0.4
+    </div>
+</footer>
+
+
+<script>
+
+function goTo(page) {
+    window.location.href = "/spam-detector/" + page + ".html";
+}</script>
+
+</body>
+</html>

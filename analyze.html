@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Spam Detector - Analyze</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+/* CSS vahi rakha hai jo tumne diya tha */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+body { margin: 0; font-family: "Poppins", sans-serif; background: radial-gradient(circle at top right, #162e58, #0b1e3d); color: white; overflow-x: hidden; min-height: 100vh; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.logo { font-size: 20px; font-weight: 700; color: #58a6ff; letter-spacing: 1px; }
+nav { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; }
+.nav-btn { background: transparent; border: none; color: rgba(255,255,255,0.7); padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-weight: 500; }
+.nav-btn:hover, .nav-btn.active { background: rgba(88, 166, 255, 0.2); color: #58a6ff; }
+.clear-btn { background: rgba(255,77,109,0.1); border: 1px solid #ff4d6d; padding: 6px 18px; border-radius: 20px; color: #ff4d6d; cursor: pointer; font-weight: 600; transition: 0.3s; }
+.clear-btn:hover { background: rgba(255,77,109,0.3); }
+main { padding: 30px 10%; }
+.card { background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); border-radius: 24px; padding: 30px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); }
+.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 20px; }
+.input-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; min-height: 220px; display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.05); }
+textarea { width: 100%; height: 150px; border-radius: 12px; border: none; padding: 15px; background: rgba(255,255,255,0.1); color: white; resize: none; box-sizing: border-box; font-family: inherit; margin-top: 10px; font-size: 14px; }
+textarea:focus { outline: 1px solid #58a6ff; background: rgba(255,255,255,0.15); }
+.upload-box { border: 2px dashed rgba(88, 166, 255, 0.3); justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; text-align: center; }
+.upload-box:hover { border-color: #58a6ff; background: rgba(88, 166, 255, 0.08); }
+.upload-icon { font-size: 45px; color: #58a6ff; margin-bottom: 12px; }
+#previewImg { max-width: 100%; max-height: 160px; border-radius: 12px; margin-top: 10px; display: none; border: 2px solid rgba(88, 166, 255, 0.2); }
+.btn-container { display: flex; justify-content: center; width: 100%; margin-top: 40px; }
+.analyze-btn { padding: 16px 60px; background: linear-gradient(135deg, #007bff, #4e9eff); border: none; border-radius: 50px; color: white; cursor: pointer; font-weight: 600; font-size: 18px; transition: 0.3s; box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3); }
+.analyze-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0, 123, 255, 0.4); }
+.analyze-btn:disabled { background: #555; cursor: not-allowed; box-shadow: none; transform: none; }
+.results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 20px; }
+.result-item { background: rgba(255,255,255,0.08); padding: 20px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+.bar { width: 100%; background: rgba(255,255,255,0.1); height: 10px; border-radius: 10px; margin-top: 12px; overflow: hidden; }
+.bar div { height: 100%; background: #4cd964; transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+#finalResult { font-size: 28px; font-weight: 700; margin: 10px 0; letter-spacing: 1px; }
+.status-safe { color: #22c55e; text-shadow: 0 0 15px rgba(34,197,94,0.3); }
+.status-danger { color: #ff4d6d; text-shadow: 0 0 15px rgba(255,77,109,0.3); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🛡️ AI Spam Detector</div>
+  <nav>
+    <button class="nav-btn" onclick="goTo('index')">Home</button>
+    <button class="nav-btn active">Analyze</button>
+    <button class="nav-btn" onclick="goTo('dashboard')">Dashboard</button>
+    <button class="nav-btn" onclick="goTo('about')">About</button>
+  </nav>
+  <button class="clear-btn" onclick="clearAll()">Clear All</button>
+</header>
+
+<main>
+  <section class="card">
+    <h2><i class="fas fa-search"></i> Analyze Message</h2>
+    <div class="input-grid">
+      <div class="input-box">
+        <h3><i class="fas fa-envelope-open-text"></i> Message Text</h3>
+        <textarea id="textInput" placeholder="Paste your email or message content here for AI analysis..."></textarea>
+      </div>
+      
+      <div class="input-box upload-box" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-content">
+            <div id="uploadUI">
+                <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <p style="font-weight: 500; color: #cbd5f5;">Click to upload screenshot</p>
+                <p style="font-size: 11px; opacity: 0.6; margin-top: 5px;">Supports: PNG, JPG (Max 5MB)</p>
+            </div>
+            <img id="previewImg" src="" alt="Preview">
+            <input type="file" id="fileInput" hidden accept="image/*">
+            <div id="fileName" style="margin-top: 10px; font-size: 12px; color: #58a6ff; font-weight: 600;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-container">
+        <button class="analyze-btn" id="analyzeBtn" onclick="analyze()">Run System Scan</button>
+    </div>
+  </section>
+
+  <section class="card" id="results" style="display:none;">
+    <h2><i class="fas fa-chart-pie"></i> Intelligence Report</h2>
+    <div class="results-grid">
+      <div class="result-item">
+        <h4>Text Confidence</h4>
+        <p id="textConf" style="font-size: 24px; font-weight: 700; color: #58a6ff;">0%</p>
+        <div class="bar"><div id="textBar" style="width: 0%"></div></div>
+      </div>
+      <div class="result-item">
+        <h4>Image Confidence</h4>
+        <p id="imgConf" style="font-size: 24px; font-weight: 700; color: #58a6ff;">N/A</p>
+        <div class="bar"><div id="imgBar" style="width: 0%"></div></div>
+      </div>
+      <div class="result-item">
+        <h4>Final Decision</h4>
+        <div id="finalResult">---</div>
+        <p id="finalMsg" style="font-size: 13px; opacity: 0.8;"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="
+    text-align: center; 
+    margin-top: 80px; 
+    padding: 40px 20px; 
+    background: rgba(0,0,0,0.3); 
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #9fb3d6;">
+    
+    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; font-size: 18px; opacity: 0.8;">
+        <span><i class="fas fa-shield-alt"></i> Secure</span>
+        <span><i class="fas fa-bolt"></i> Real-time</span>
+        <span><i class="fas fa-brain"></i> AI-Powered</span>
+    </div>
+
+    <p style="margin: 5px 0; font-weight: 600; letter-spacing: 1px; color: #fff;">
+        © 2026 MULTI-MODAL SPAM DETECTION SYSTEM
+    </p>
+    
+    <p style="font-size: 13px; opacity: 0.6; max-width: 600px; margin: 10px auto;">
+        An advanced research project focused on enhancing email security through Distributed Intelligence and Computer Vision. 
+        Designed for high-accuracy threat classification.
+    </p>
+
+    <div style="margin-top: 20px; font-size: 12px; opacity: 0.5;">
+        Academic Project • Data Science & ML • v1.0.4
+    </div>
+</footer>
+
+
+<script>
+const fileInput = document.getElementById("fileInput");
+const fileName = document.getElementById("fileName");
+const previewImg = document.getElementById("previewImg");
+const uploadUI = document.getElementById("uploadUI");
+const results = document.getElementById("results");
+const analyzeBtn = document.getElementById("analyzeBtn");
+
+// FIX: Navigation logic updated for current folder structure
+function goTo(page) {
+    window.location.href = "/spam-detector/" + page + ".html";
+}
+
+fileInput.addEventListener("change", function(){
+  const file = this.files[0];
+  if (file) {
+    fileName.innerText = "File Attached: " + file.name;
+    const reader = new FileReader();
+    reader.onload = function(e){
+      previewImg.src = e.target.result;
+      previewImg.style.display = "block";
+      uploadUI.style.display = "none";
+    }
+    reader.readAsDataURL(file);
+  }
+});
+
+async function analyze(){
+  let text = document.getElementById("textInput").value.trim();
+  let file = fileInput.files[0];
+
+  if(!text && !file){
+    alert("Please enter some text or upload an image first!");
+    return;
+  }
+
+  analyzeBtn.disabled = true;
+  analyzeBtn.innerText = "Analyzing Content...";
+  
+  let formData = new FormData();
+  formData.append("text", text);
+  if(file) formData.append("image", file);
+
+  try {
+    // FIX: URL updated to ensure it reaches the Servlet
+    let res = await fetch("/spam-detector/AnalyzeServlet", { method: "POST", body: formData });
+    let data = await res.json();
+
+    results.style.display = "block";
+    results.scrollIntoView({ behavior: 'smooth' });
+
+    let textVal = data.text_confidence || 0;
+    let imgVal = data.image_confidence || 0;
+
+    document.getElementById("textConf").innerText = (textVal * 100).toFixed(1) + "%";
+    document.getElementById("textBar").style.width = (textVal * 100) + "%";
+
+    if(data.image_confidence !== undefined) {
+        document.getElementById("imgConf").innerText = (imgVal * 100).toFixed(1) + "%";
+        document.getElementById("imgBar").style.width = (imgVal * 100) + "%";
+    }
+
+    const finalRes = document.getElementById("finalResult");
+    const finalMsg = document.getElementById("finalMsg");
+    
+    finalRes.innerText = data.final_decision;
+    finalRes.className = "";
+    
+    if(data.final_decision === "HAM"){
+      finalRes.classList.add("status-safe");
+      finalMsg.innerText = "This message is verified as Safe.";
+    } else {
+      finalRes.classList.add("status-danger");
+      finalMsg.innerText = "High alert! This message is identified as SPAM.";
+    }
+
+  } catch (err) {
+    alert("Connection Error! Ensure Tomcat is running and MySQL table is ready.");
+  } finally {
+    analyzeBtn.disabled = false;
+    analyzeBtn.innerText = "Run System Scan";
+  }
+}
+
+function clearAll(){
+  document.getElementById("textInput").value = "";
+  fileInput.value = "";
+  fileName.innerText = "";
+  previewImg.style.display = "none";
+  uploadUI.style.display = "block";
+  results.style.display = "none";
+}
+</script>
+</body>
+</html>
