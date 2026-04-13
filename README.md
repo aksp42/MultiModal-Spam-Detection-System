@@ -115,7 +115,7 @@ The project includes a **real-time interactive dashboard** that transforms raw A
 
 ### 📸 Dashboard Preview
 
-![Dashboard](Screenshots/Screenshot%202026-04-14%20005150.png)
+![Dashboard](Screenshots/Screenshot%202026-04-14%20005122.png)
 
 
 ## 🛠️ Tech Stack
