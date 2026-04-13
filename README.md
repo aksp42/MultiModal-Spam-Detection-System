@@ -169,7 +169,7 @@ The project includes a **real-time interactive dashboard** that transforms raw A
 ## 🚀 Setup & Installation
 
 ### 1️⃣ Clone the Repository
-git clone https://github.com/your-username/your-repo-name.git
+git clone [https://github.com/aksp42/MultiModal-Spam-Detection-System]
 
 ### 2️⃣ Start Flask Server
 cd Flask_Server  
