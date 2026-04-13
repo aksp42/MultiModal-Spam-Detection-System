@@ -50,16 +50,36 @@ This project includes a real-time dashboard powered by **MySQL** and **Java Serv
 **Database:** MySQL (JDBC)  
 **Frontend:** HTML, CSS, JavaScript  
 
----
-
 ## 📂 Project Structure
 
-/Flask_Server      → Model inference & API (Python)  
-/Java_Backend      → Servlets & database logic  
-/Web_Content       → UI + Dashboard  
-/Models            → Pre-trained model weights  
-
----
+```
+.
+├── WEB-INF
+│   ├── mysql-connector-j-9.6.0.jar
+│   └── servlet-api.jar
+│
+├── database_connectivity
+│   ├── AnalyzeServlet.java
+│   ├── DashboardServlet.java
+│   ├── DatabaseManager.java
+│   ├── DatabaseTest.java
+│   └── t
+│
+├── models
+│   ├── Model Code/
+│   ├── text_model/
+│   └── image_model.pth
+│
+├── License
+├── README.md
+├── about.html
+├── analyze.html
+├── app.py
+├── dashboard.html
+├── final_cleaned_data.csv
+├── index.html
+└── requirements.txt
+```
 
 ## 🚀 Setup & Installation
 
