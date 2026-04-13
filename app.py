@@ -6,7 +6,7 @@ from torchvision import models, transforms
 from PIL import Image
 import os
 
-# FIX: Flask ko bata rahe hain ki templates aur static files bahar hi hain
+
 app = Flask(__name__, template_folder='.', static_folder='.')
 
 # =========================
