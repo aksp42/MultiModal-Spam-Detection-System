@@ -198,7 +198,7 @@ python app.py
 
 **Akanksha Singh** - https://www.linkedin.com/in/akanksha-singh-4715a0351/ 
 
-Video of the project : https://www.linkedin.com/feed/update/urn:li:activity:7435308264692711426/?originTrackingId=AvOMtZdGQbLQAvcHoStBjQ%3D%3D
+Video of the project : https://www.linkedin.com/feed/update/urn:li:activity:7449671531221377024/
 
 📜 License
 This project is licensed under the MIT License - see the LICENSE file for details.
